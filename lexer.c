@@ -283,7 +283,85 @@ struct tokenlexemepair* getNexttoken(char* stream){
 					printf("infn%s %d %d\n",tk->lexeme,init_ptr,nxt_lex_ptr-1);
 					nxt_lex_ptr--;
 					return tk;
+			
+			case 28:c=stream[nxt_lex_ptr];
+					nxt_lex_ptr++;
+					switch(c){
+						case '=':state=29;
+									break;
+						default:state=30;
+					}
+					break;
+			case 29:tk->token="TK_ASSIGNOP";
+					tk->lexeme=substr(init_ptr,nxt_lex_ptr);
+					return tk;
+			
+			case 30:tk->token="TK_COLON";
+					tk->lexeme=substr(init_ptr,nxt_lex_ptr);
+					return tk;
+			case 33:c=stream[nxt_lex_ptr];
+					nxt_lex_ptr++;
+					switch(c){
+						case 'a'...'z':
+						case 'A'...'Z':
+						case '0'...'9':
+						case '_':
+								 break;
+						default:state=34;
+					}
+					break;
+			case 34:tk->token=search_token();
+					tk->lexeme=substr(init_ptr,nxt_lex_ptr-1);
+					nxt_lex_ptr--;
+					return tk;
+            
+			case 23:c=stream[nxt_lex_ptr];
+					nxt_lex_ptr++;
+					switch(c){
+						case '.':state=24;break;
+						default:state=100;
+					}
+					break;
+			case 24:tk->token="TK_RANGEOP";
+					tk->lexeme=substr(init_ptr,nxt_lex_ptr);
+					return tk;
+			case 19:c=stream[nxt_lex_ptr];
+					nxt_lex_ptr++;
+					switch(c){
+						case '<':state=20;break;
+						case '=':state=21;break;
+						default:state=22;
+					}
+					break;
+			case 20:tk->token="TK_DEF";
+					tk->lexeme=substr(init_ptr,nxt_lex_ptr);
+					return tk;
+			case 21:tk->token="TK_LE";
+					tk->lexeme=substr(init_ptr,nxt_lex_ptr);
+					return tk;
+			case 22:tk->token="TK_LT";
+					tk->lexeme=substr(init_ptr,nxt_lex_ptr-1);
+					nxt_lex_ptr--;
+					return tk;
 
+			case 15:c=stream[nxt_lex_ptr];
+					nxt_lex_ptr++;
+					switch(c){
+						case '>':state=16;break;
+						case '=':state=17;break;
+						default:state=18;
+					}
+					break;
+			case 16:tk->token="TK_ENDDEF";
+					tk->lexeme=substr(init_ptr,nxt_lex_ptr);
+					return tk;
+			case 17:tk->token="TK_GE";
+					tk->lexeme=substr(init_ptr,nxt_lex_ptr);
+					return tk;
+			case 18:tk->token="TK_GT";
+					tk->lexeme=substr(init_ptr,nxt_lex_ptr-1);
+					nxt_lex_ptr--;
+					return tk;
 		}
 	}
 }
