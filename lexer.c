@@ -24,7 +24,7 @@ char* substr(int begin,int end){
 	for(int i=begin;i<end;i++){
 		ret[i-begin]=stream[i];
 	}
-	r[end-begin+1]='\0';
+	ret[end-begin+1]='\0';
 	return ret;
 }
 
