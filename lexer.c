@@ -116,11 +116,30 @@ struct tokenlexemepair* getNexttoken(char* stream){
 				 tk->lexeme=')';
 				 return tk;
 				
-			case 7 : if(
+			case 7 : c=stream[next_lex_ptr];
+					  next_lex_ptr++;
+					  switch(c){
+						case '=':state=8;break;
+						default : state=100;
+					}
+					break;
 				
-			case 8 : tk->token="TK_SEMICOLON";
-				 tk->lexeme=';';
+			case 8 : tk->token="TK_NE";
+				 tk->lexeme='!=';
 				 return tk;
+				
+			case 9 : tk->token="TK_PLUS";
+				 tk->lexeme='+';
+				 return tk;
+				
+			case 10 : tk->token="TK_MINUS";
+				 tk->lexeme='-';
+				 return tk;
+				
+			case 11 : tk->token="TK_DIV";
+				 tk->lexeme='/';
+				 return tk;
+				
 			case 31:c=stream[nxt_lex_ptr];
 					nxt_lex_ptr++;
 					switch(c){
