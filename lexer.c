@@ -60,6 +60,7 @@ struct tokenlexemepair* getNexttoken(char* stream){
 	int state=0;
 	while(1){
 		switch(state){
+				
 			case 0:	c=stream[nxt_lex_ptr];
 					nxt_lex_ptr++;
 					switch(c){
@@ -90,7 +91,36 @@ struct tokenlexemepair* getNexttoken(char* stream){
 						default:state=100;
 					}
 					break;
-
+				
+			case 1 : tk->token="TK_SEMICOLON";
+				 tk->lexeme=';';
+				 return tk;
+				
+			case 2 : tk->token="TK_COMMA";
+				 tk->lexeme=',';
+				 return tk;
+				
+			case 3 : tk->token="TK_SQBO";
+				 tk->lexeme='[';
+				 return tk;
+				
+			case 4 : tk->token="TK_SQBC";
+				 tk->lexeme=']';
+				 return tk;
+				
+			case 5 : tk->token="TK_BO";
+				 tk->lexeme='(';
+				 return tk;
+				
+			case 6 : tk->token="TK_BC";
+				 tk->lexeme=')';
+				 return tk;
+				
+			case 7 : if(
+				
+			case 8 : tk->token="TK_SEMICOLON";
+				 tk->lexeme=';';
+				 return tk;
 			case 31:c=stream[nxt_lex_ptr];
 					nxt_lex_ptr++;
 					switch(c){
@@ -98,9 +128,11 @@ struct tokenlexemepair* getNexttoken(char* stream){
 						default:state=0;nxt_lex_ptr--;init_ptr=nxt_lex_ptr;
 					}
 					break;
+				
 			case 32:nxt_lex_ptr--;
 					state=0;
 					break;
+				
 			case 35:c=stream[nxt_lex_ptr];
 					nxt_lex_ptr++;
 					switch(c){
@@ -110,11 +142,13 @@ struct tokenlexemepair* getNexttoken(char* stream){
 						default:state=36;
 					}
 					break;
+				
 			case 36:tk->token="TK_NUM";
 					//tk->lexeme=malloc((nxt_lex_ptr-init_ptr)*sizeof(char));
 					tk->lexeme=substr(init_ptr,nxt_lex_ptr-1);
 					nxt_lex_ptr--;
 					return tk;
+				
 			case 37:c=stream[nxt_lex_ptr];
 					nxt_lex_ptr++;
 					switch(c){
@@ -124,11 +158,13 @@ struct tokenlexemepair* getNexttoken(char* stream){
 						default:state=100;
 					}
 					break;
+				
 			case 38:tk->token="TK_NUM";
 					//tk->lexeme=malloc((nxt_lex_ptr-init_ptr)*sizeof(char));
 					tk->lexeme=substr(init_ptr,nxt_lex_ptr-2);
 					nxt_lex_ptr-=2;
 					return tk;
+				
 			case 39:c=stream[nxt_lex_ptr];
 					nxt_lex_ptr++;
 					switch(c){
@@ -139,6 +175,7 @@ struct tokenlexemepair* getNexttoken(char* stream){
 						default:state=45;
 					}
 					break;
+				
 			case 40:c=stream[nxt_lex_ptr];
 					nxt_lex_ptr++;
 					switch(c){
@@ -149,11 +186,13 @@ struct tokenlexemepair* getNexttoken(char* stream){
 						default:state=41;
 					}
 					break;
+				
 			case 41:tk->token="TK_RNUM";
 					//tk->lexeme=malloc((nxt_lex_ptr-init_ptr)*sizeof(char));
 					tk->lexeme=substr(init_ptr,nxt_lex_ptr-2);
 					nxt_lex_ptr-=2;
 					return tk;
+				
 			case 42:c=stream[nxt_lex_ptr];
 					nxt_lex_ptr++;
 					switch(c){
@@ -161,11 +200,13 @@ struct tokenlexemepair* getNexttoken(char* stream){
 						default:state=43;
 					}
 					break;
+				
 			case 43:tk->token="TK_RNUM";
 					//tk->lexeme=malloc((nxt_lex_ptr-init_ptr)*sizeof(char));
 					tk->lexeme=substr(init_ptr,nxt_lex_ptr-3);
 					nxt_lex_ptr-=3;
 					return tk;
+				
 			case 44:c=stream[nxt_lex_ptr];
 					nxt_lex_ptr++;
 					switch(c){
@@ -173,6 +214,7 @@ struct tokenlexemepair* getNexttoken(char* stream){
 						default:state=45;
 					}
 					break;
+				
 			case 45:tk->token="TK_RNUM";
 					//tk->lexeme=malloc((nxt_lex_ptr-init_ptr)*sizeof(char));
 					tk->lexeme=substr(init_ptr,nxt_lex_ptr-1);
