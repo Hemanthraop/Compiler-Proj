@@ -9,7 +9,7 @@
 //global vars
 char *stream;
 int nxt_lex_ptr;
-bool fileover;
+bool fileover,streamover;
 
 //structs
 struct tokenlexemepair{
@@ -31,6 +31,7 @@ char* substr(int begin,int end){
 //functions
 
 FILE *getStream(FILE *fp){
+	fileover=false;
 	nxt_lex_ptr=0;
 	char initial;
 	stream=malloc(sizeof(char)*MAX);
@@ -53,6 +54,7 @@ FILE *getStream(FILE *fp){
 }
 
 struct tokenlexemepair* getNexttoken(char* stream){
+	streamover=false;
 	char c;
 	int init_ptr=nxt_lex_ptr;
 	struct tokenlexemepair* tk;
@@ -87,6 +89,7 @@ struct tokenlexemepair* getNexttoken(char* stream){
 						case '\n': state = 31; break;
 						case 'a' ... 'z' : 
 						case 'A' ... 'Z' :state = 33; break;
+						case '\0':
 						case EOF : state = 46; break;   //eof?
 						case '0' ... '9':state=35; break;
 						default:state=100;
@@ -123,8 +126,8 @@ struct tokenlexemepair* getNexttoken(char* stream){
 				 tk->lexeme=")";
 				 return tk;
 				
-			case 7 : c=stream[next_lex_ptr];
-					  next_lex_ptr++;
+			case 7 : c=stream[nxt_lex_ptr];
+					  nxt_lex_ptr++;
 					  switch(c){
 						case '=':state=8;break;
 						default : state=100;
@@ -133,7 +136,7 @@ struct tokenlexemepair* getNexttoken(char* stream){
 				
 			case 8 : tk->token="TK_NE";
 				 tk->lexeme=malloc(3*sizeof(char));
-				 tk->lexeme='!=';
+				 tk->lexeme="!=";
 				 return tk;
 				
 			case 9 : tk->token="TK_PLUS";
@@ -152,37 +155,39 @@ struct tokenlexemepair* getNexttoken(char* stream){
 				 return tk;
 				
 			case 12 : c = stream[nxt_lex_ptr];
+					//printf("jjjj%c\n",c);
 				  nxt_lex_ptr++;
 				  switch(c){
 					case '*': state = 27;break;
 					default:state = 13;
 				  }
-				
-			case 13 : tk->token="TK_NUM";
+				  break;
+			case 13 : tk->token="TK_MUL";
 					//tk->lexeme=malloc((nxt_lex_ptr-init_ptr)*sizeof(char));
 					tk->lexeme=substr(init_ptr,nxt_lex_ptr-1);
 					nxt_lex_ptr--;
 					return tk;
 				
-			case 14 : tk->token="TK_NUM";
+			case 14 : tk->token="TK_COMMENT";
 					//tk->lexeme=malloc((nxt_lex_ptr-init_ptr)*sizeof(char));
 					tk->lexeme=substr(init_ptr,nxt_lex_ptr);
 					return tk;
 				
 			case 27 : c = stream[nxt_lex_ptr];
 				  nxt_lex_ptr++;
+				  //printf("hhhh%c\n",c);
 				  switch(c){
 					case '*': state = 47;break;
-					default:state = 27;nxt_ptr--;init_ptr = nxt_lex_ptr;
+					default:state = 27;
 				  }
-				
+				  break;
 			case 47 :  c = stream[nxt_lex_ptr];
 				  nxt_lex_ptr++;
 				  switch(c){
 					case '*': state = 14;break;
-					default:state = 27;nxt_ptr--;init_ptr = nxt_lex_ptr;
+					default:state = 27;
 				  }
-				
+				  break;
 			case 31:c=stream[nxt_lex_ptr];
 					nxt_lex_ptr++;
 					switch(c){
@@ -280,10 +285,10 @@ struct tokenlexemepair* getNexttoken(char* stream){
 			case 45:tk->token="TK_RNUM";
 					//tk->lexeme=malloc((nxt_lex_ptr-init_ptr)*sizeof(char));
 					tk->lexeme=substr(init_ptr,nxt_lex_ptr-1);
-					printf("infn%s %d %d\n",tk->lexeme,init_ptr,nxt_lex_ptr-1);
+					//printf("infn%s %d %d\n",tk->lexeme,init_ptr,nxt_lex_ptr-1);
 					nxt_lex_ptr--;
 					return tk;
-			
+			case 46:streamover=true;return NULL;
 			case 28:c=stream[nxt_lex_ptr];
 					nxt_lex_ptr++;
 					switch(c){
@@ -297,7 +302,8 @@ struct tokenlexemepair* getNexttoken(char* stream){
 					return tk;
 			
 			case 30:tk->token="TK_COLON";
-					tk->lexeme=substr(init_ptr,nxt_lex_ptr);
+					tk->lexeme=substr(init_ptr,nxt_lex_ptr-1);
+					nxt_lex_ptr--;
 					return tk;
 			case 33:c=stream[nxt_lex_ptr];
 					nxt_lex_ptr++;
@@ -310,7 +316,7 @@ struct tokenlexemepair* getNexttoken(char* stream){
 						default:state=34;
 					}
 					break;
-			case 34:tk->token=search_token();
+			case 34://tk->token=search_token();
 					tk->lexeme=substr(init_ptr,nxt_lex_ptr-1);
 					nxt_lex_ptr--;
 					return tk;
@@ -333,10 +339,23 @@ struct tokenlexemepair* getNexttoken(char* stream){
 						default:state=22;
 					}
 					break;
-			case 20:tk->token="TK_DEF";
+			case 20:/*tk->token="TK_DEF";
+					tk->lexeme=substr(init_ptr,nxt_lex_ptr);
+					return tk;*/
+					c=stream[nxt_lex_ptr];
+					nxt_lex_ptr++;
+					switch(c){
+						case '<':state=50;break;
+						default:state=51;
+					}
+					break;
+			case 50:tk->token="TK_DRIVERDEF";
 					tk->lexeme=substr(init_ptr,nxt_lex_ptr);
 					return tk;
-					
+			case 51:tk->token="TK_DEF";
+					tk->lexeme=substr(init_ptr,nxt_lex_ptr-1);
+					nxt_lex_ptr--;
+					return tk;		
 			case 21:tk->token="TK_LE";
 					tk->lexeme=substr(init_ptr,nxt_lex_ptr);
 					return tk;
@@ -353,8 +372,22 @@ struct tokenlexemepair* getNexttoken(char* stream){
 						default:state=18;
 					}
 					break;
-			case 16:tk->token="TK_ENDDEF";
+			case 16:/*tk->token="TK_ENDDEF";
 					tk->lexeme=substr(init_ptr,nxt_lex_ptr);
+					return tk;*/
+					c=stream[nxt_lex_ptr];
+					nxt_lex_ptr++;
+					switch(c){
+						case '>':state=48;break;
+						default:state=49;
+					}
+					break;
+			case 48:tk->token="TK_ENDDRIVERDEF";
+					tk->lexeme=substr(init_ptr,nxt_lex_ptr);
+					return tk;
+			case 49:tk->token="TK_ENDDEF";
+					tk->lexeme=substr(init_ptr,nxt_lex_ptr-1);
+					nxt_lex_ptr--;
 					return tk;
 			case 17:tk->token="TK_GE";
 					tk->lexeme=substr(init_ptr,nxt_lex_ptr);
@@ -381,17 +414,22 @@ struct tokenlexemepair* getNexttoken(char* stream){
 }
 
 int main(){
+	struct tokenlexemepair* ex;
 	FILE* fp=fopen("test.txt","r");
 	if(fp==NULL)printf("NULL file\n");
-	getStream(fp);
-	printf("%s\n",stream);
-	/*getStream(fp);
-	printf("%s\n",stream);
-	getStream(fp);
-	printf("%s\n",stream);*/
-	struct tokenlexemepair* ex=getNexttoken(stream);
-	printf("%s\n%s\n",ex->lexeme,ex->token);
-	free(ex);
-	ex=getNexttoken(stream);
-	printf("%s\n%s\n",ex->lexeme,ex->token);
+
+	while(1){
+		fp=getStream(fp);
+		
+		//printf("xxx%s\n",stream);
+
+		while(1){
+			ex=getNexttoken(stream);
+			if(streamover==true) break;
+			printf("%s\t%s\n",ex->token,ex->lexeme);
+		}
+		if(fileover==true) break;
+	}
 }
+
+
