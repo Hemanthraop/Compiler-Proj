@@ -19,11 +19,12 @@ struct tokenlexemepair{
 
 //utility functions
 char* substr(int begin,int end){
-	char* ret=malloc((end-begin)*sizeof(char));
+	char* ret=malloc((end-begin+1)*sizeof(char));
 	strcpy(ret,"");
 	for(int i=begin;i<end;i++){
 		ret[i-begin]=stream[i];
 	}
+	r[end-begin+1]='\0';
 	return ret;
 }
 
@@ -93,27 +94,33 @@ struct tokenlexemepair* getNexttoken(char* stream){
 					break;
 				
 			case 1 : tk->token="TK_SEMICOLON";
-				 tk->lexeme=';';
+				 tk->lexeme=malloc(2*sizeof(char));
+				 tk->lexeme=";";
 				 return tk;
 				
 			case 2 : tk->token="TK_COMMA";
-				 tk->lexeme=',';
+				 tk->lexeme=malloc(2*sizeof(char));
+				 tk->lexeme=",";
 				 return tk;
 				
 			case 3 : tk->token="TK_SQBO";
-				 tk->lexeme='[';
+				 tk->lexeme=malloc(2*sizeof(char));
+				 tk->lexeme="[";
 				 return tk;
 				
 			case 4 : tk->token="TK_SQBC";
-				 tk->lexeme=']';
+				 tk->lexeme=malloc(2*sizeof(char));
+				 tk->lexeme="]";
 				 return tk;
 				
 			case 5 : tk->token="TK_BO";
-				 tk->lexeme='(';
+				 tk->lexeme=malloc(2*sizeof(char));
+				 tk->lexeme="(";
 				 return tk;
 				
 			case 6 : tk->token="TK_BC";
-				 tk->lexeme=')';
+				 tk->lexeme=malloc(2*sizeof(char));
+				 tk->lexeme=")";
 				 return tk;
 				
 			case 7 : c=stream[next_lex_ptr];
@@ -125,19 +132,23 @@ struct tokenlexemepair* getNexttoken(char* stream){
 					break;
 				
 			case 8 : tk->token="TK_NE";
+				 tk->lexeme=malloc(3*sizeof(char));
 				 tk->lexeme='!=';
 				 return tk;
 				
 			case 9 : tk->token="TK_PLUS";
-				 tk->lexeme='+';
+				 tk->lexeme=malloc(2*sizeof(char));
+				 tk->lexeme="+";
 				 return tk;
 				
 			case 10 : tk->token="TK_MINUS";
-				 tk->lexeme='-';
+				 tk->lexeme=malloc(2*sizeof(char));
+				 tk->lexeme="-";
 				 return tk;
 				
 			case 11 : tk->token="TK_DIV";
-				 tk->lexeme='/';
+				  tk->lexeme=malloc(2*sizeof(char));
+				 tk->lexeme="/";
 				 return tk;
 				
 			case 12 : c = stream[nxt_lex_ptr];
