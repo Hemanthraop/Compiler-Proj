@@ -336,6 +336,7 @@ struct tokenlexemepair* getNexttoken(char* stream){
 			case 20:tk->token="TK_DEF";
 					tk->lexeme=substr(init_ptr,nxt_lex_ptr);
 					return tk;
+					
 			case 21:tk->token="TK_LE";
 					tk->lexeme=substr(init_ptr,nxt_lex_ptr);
 					return tk;
@@ -361,6 +362,19 @@ struct tokenlexemepair* getNexttoken(char* stream){
 			case 18:tk->token="TK_GT";
 					tk->lexeme=substr(init_ptr,nxt_lex_ptr-1);
 					nxt_lex_ptr--;
+					return tk;
+			case 25:c=stream[nxt_lex_ptr];
+			        nxt_lex_ptr++;
+			        switch(c){
+			        	case '=':state=26;break;
+			        	default:state=100;
+			        }
+				break;
+			case 26:tk->token="TK_EQ";
+					//tk->lexeme=malloc((nxt_lex_ptr-init_ptr)*sizeof(char));
+					tk->lexeme=substr(init_ptr,nxt_lex_ptr);
+					//printf("infn%s %d %d\n",tk->lexeme,init_ptr,nxt_lex_ptr-1);
+					//nxt_lex_ptr--;
 					return tk;
 		}
 	}
