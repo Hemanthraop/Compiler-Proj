@@ -139,6 +139,12 @@ struct tokenlexemepair* getNexttoken(char* stream){
 			case 11 : tk->token="TK_DIV";
 				 tk->lexeme='/';
 				 return tk;
+			case 12 : c = stream[nxt_lex_ptr];
+				  nxt_lex_ptr++;
+				  switch(c){
+					case '*': state = 27;break;
+					default:state = 0;nxt_ptr--;init_ptr = nxt_lex_ptr;
+				  }
 				
 			case 31:c=stream[nxt_lex_ptr];
 					nxt_lex_ptr++;
