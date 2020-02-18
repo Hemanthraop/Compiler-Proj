@@ -139,11 +139,37 @@ struct tokenlexemepair* getNexttoken(char* stream){
 			case 11 : tk->token="TK_DIV";
 				 tk->lexeme='/';
 				 return tk;
+				
 			case 12 : c = stream[nxt_lex_ptr];
 				  nxt_lex_ptr++;
 				  switch(c){
 					case '*': state = 27;break;
-					default:state = 0;nxt_ptr--;init_ptr = nxt_lex_ptr;
+					default:state = 13;
+				  }
+				
+			case 13 : tk->token="TK_NUM";
+					//tk->lexeme=malloc((nxt_lex_ptr-init_ptr)*sizeof(char));
+					tk->lexeme=substr(init_ptr,nxt_lex_ptr-1);
+					nxt_lex_ptr--;
+					return tk;
+				
+			case 14 : tk->token="TK_NUM";
+					//tk->lexeme=malloc((nxt_lex_ptr-init_ptr)*sizeof(char));
+					tk->lexeme=substr(init_ptr,nxt_lex_ptr);
+					return tk;
+				
+			case 27 : c = stream[nxt_lex_ptr];
+				  nxt_lex_ptr++;
+				  switch(c){
+					case '*': state = 47;break;
+					default:state = 27;nxt_ptr--;init_ptr = nxt_lex_ptr;
+				  }
+				
+			case 47 :  c = stream[nxt_lex_ptr];
+				  nxt_lex_ptr++;
+				  switch(c){
+					case '*': state = 14;break;
+					default:state = 27;nxt_ptr--;init_ptr = nxt_lex_ptr;
 				  }
 				
 			case 31:c=stream[nxt_lex_ptr];
