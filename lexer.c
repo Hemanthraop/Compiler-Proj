@@ -9,7 +9,7 @@
 //global vars
 char *stream;
 int nxt_lex_ptr;
-bool fileover,streamover;
+bool fileover,streamover,iserror;
 
 //structs
 struct tokenlexemepair{
@@ -54,6 +54,7 @@ FILE *getStream(FILE *fp){
 }
 
 struct tokenlexemepair* getNexttoken(char* stream){
+	iserror=false;
 	streamover=false;
 	char c;
 	int init_ptr=nxt_lex_ptr;
@@ -409,6 +410,10 @@ struct tokenlexemepair* getNexttoken(char* stream){
 					//printf("infn%s %d %d\n",tk->lexeme,init_ptr,nxt_lex_ptr-1);
 					//nxt_lex_ptr--;
 					return tk;
+			case 100:printf("Error Error Lexical Error :\n");
+					iserror=true;
+					//printf("%s\n",substr(init_ptr,nxt_lex_ptr))
+					return NULL;
 		}
 	}
 }
@@ -426,6 +431,7 @@ int main(){
 		while(1){
 			ex=getNexttoken(stream);
 			if(streamover==true) break;
+			if(iserror==true)continue;
 			printf("%s\t%s\n",ex->token,ex->lexeme);
 		}
 		if(fileover==true) break;
