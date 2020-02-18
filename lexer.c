@@ -64,16 +64,29 @@ struct tokenlexemepair* getNexttoken(char* stream){
 					nxt_lex_ptr++;
 					switch(c){
 
-						case ';':state=1;
-								break;
-						case ',':
-								//incomplete
-
-						case ' ':state=31;break;
-						case '0' ... '9':state=35;
-										 break;
-
-
+						case ';' : state = 1; break;
+						case ',' : state = 2; break;
+						case '[' : state = 3; break;  
+						case ']' : state = 4; break;
+						case '(' : state = 5; break;
+						case ')' : state = 6; break;
+						case '!' : state = 7; break;
+						case '+' : state = 9; break;
+						case '-' : state = 10; break;
+						case '/' : state = 11; break;
+						case '*' : state = 12; break;
+						case '>' : state = 15; break;
+						case '<' : state = 19; break;
+						case '.' : state = 23; break;
+						case '=' : state = 25; break;
+						case ':' : state = 28; break;
+						case ' ' : 
+						case '\t':
+						case '\n': state = 31; break;
+						case 'a' ... 'z' : 
+						case 'A' ... 'Z' :state = 33; break;
+						case EOF : state = 46; break;   //eof?
+						case '0' ... '9':state=35; break;
 						default:state=100;
 					}
 					break;
