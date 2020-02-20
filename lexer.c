@@ -5,8 +5,10 @@
 #include <stdbool.h>
 
 #define MAX 81       //defining max limit for a line
+#define LEN 10
 
 //global vars
+int line_no;
 char *stream;
 int nxt_lex_ptr;
 bool fileover,streamover,iserror;
@@ -17,7 +19,66 @@ struct tokenlexemepair{
 	char* lexeme;
 };
 
+struct tokenlexemepair* hashtable[10];
+int sizes[10];
+
 //utility functions
+int hashfun(char* lex){
+	return (strlen(lex)%10);
+}
+
+void intialize_symbol_table(){
+	char *res_lex[33]={"integer","real","boolean","of","array","start","end","declare","module","driver","program","record","tagged","union","get_value","print","use","with","parameters","true","false","takes","input","returns","AND","OR","for","in","switch","case","break","default","while"};
+	char *res_tok[33]={"INTEGER","REAL","BOOLEAN","OF","ARRAY","START","END","DECLARE","MODULE","DRIVER","PROGRAM","RECORD","TAGGED","UNION","GET_VALUE","PRINT","USE","WITH","PARAMETERS","TRUE","FALSE","TAKES","INPUT","RETURNS","AND","OR","FOR","IN","SWITCH","CASE","BREAK","DEFAULT","WHILE"};
+	
+	for(int i=0;i<33;i++){
+		char tok[20]="TK_";
+		int k = hashfun(res_lex[i]);
+		struct tokenlexemepair* ptr=hashtable[k];
+		
+		ptr=realloc(ptr,(sizes[k]+1)*sizeof(struct tokenlexemepair));
+		hashtable[k]=ptr;
+		ptr[sizes[k]].lexeme=malloc(33*sizeof(char));
+		strcpy(ptr[sizes[k]].lexeme,res_lex[i]);
+		
+		ptr[sizes[k]].token=malloc(sizeof(char)*20);
+		strcpy(ptr[sizes[k]].token,strcat(tok,res_tok[i]));
+	//ptr[sizes[k]].token="TK_ID";
+	
+	
+		sizes[k]++;
+	}
+}
+char* search_token(char* lex){
+	char* a="TK_ID";
+	
+	int k = hashfun(lex);
+	struct tokenlexemepair* ptr=hashtable[k];
+	
+	//int size=sizeof(hashtable[k])/sizeof(struct tokenlexemepair);
+	//printf("%d\n",sizes[k]);
+	for(int i=0;i<sizes[k];i++){
+		
+		if(strcmp(lex,ptr[i].lexeme)==0){
+			
+			return ptr[i].token;
+		}
+	}
+	
+	ptr=realloc(ptr,(sizes[k]+1)*sizeof(struct tokenlexemepair));
+	hashtable[k]=ptr;
+	ptr[sizes[k]].lexeme=malloc(33*sizeof(char));
+	strcpy(ptr[sizes[k]].lexeme,lex);
+	
+	ptr[sizes[k]].token=malloc(sizeof(char)*10);
+	strcpy(ptr[sizes[k]].token,a);
+	//ptr[sizes[k]].token="TK_ID";
+	
+	
+	sizes[k]++;
+	return ptr[sizes[k]-1].token;
+}
+
 char* substr(int begin,int end){
 	char* ret=malloc((end-begin+1)*sizeof(char));
 	strcpy(ret,"");
@@ -37,7 +98,7 @@ FILE *getStream(FILE *fp){
 	stream=malloc(sizeof(char)*MAX);
 	strcpy(stream,"");
 	while(1){
-		
+		line_no++;
 		initial = fgetc(fp);
 		if(initial==EOF){fileover=true;return NULL;}
 		//printf("%c",initial);
@@ -317,9 +378,10 @@ struct tokenlexemepair* getNexttoken(char* stream){
 						default:state=34;
 					}
 					break;
-			case 34://tk->token=search_token();
+			case 34:
 					tk->lexeme=substr(init_ptr,nxt_lex_ptr-1);
 					nxt_lex_ptr--;
+					strcpy(tk->token,search_token(tk->lexeme));
 					return tk;
             
 			case 23:c=stream[nxt_lex_ptr];
@@ -410,7 +472,7 @@ struct tokenlexemepair* getNexttoken(char* stream){
 					//printf("infn%s %d %d\n",tk->lexeme,init_ptr,nxt_lex_ptr-1);
 					//nxt_lex_ptr--;
 					return tk;
-			case 100:printf("Error Error Lexical Error :\n");
+			case 100:printf("Line: %d Lexical Error :\n",line_no);
 					iserror=true;
 					//printf("%s\n",substr(init_ptr,nxt_lex_ptr))
 					return NULL;
@@ -419,20 +481,20 @@ struct tokenlexemepair* getNexttoken(char* stream){
 }
 
 int main(){
+	intialize_symbol_table();
+
 	struct tokenlexemepair* ex;
 	FILE* fp=fopen("test.txt","r");
 	if(fp==NULL)printf("NULL file\n");
 
 	while(1){
 		fp=getStream(fp);
-		
-		//printf("xxx%s\n",stream);
-
+	
 		while(1){
 			ex=getNexttoken(stream);
 			if(streamover==true) break;
 			if(iserror==true)continue;
-			printf("%s\t%s\n",ex->token,ex->lexeme);
+			printf("%s\t%s\t%d\n",ex->token,ex->lexeme,line_no);
 		}
 		if(fileover==true) break;
 	}
