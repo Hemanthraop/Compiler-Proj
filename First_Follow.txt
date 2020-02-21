@@ -1,0 +1,53 @@
+Non-Terminal                                                         FIRST SET                                                               FOLLOW SET
+
+<program>                                                       {DECLARE,DEF,DRIVERDEF}                                                          {$}
+<moduleDeclarations>			                            {DECLARE,E}                                                             {DEF,DRIVERDEF}
+<moduleDeclaration>                                                 {DECLARE}                                                           {DECLARE,DEF,DRIVERDEF}
+<otherModules>                                                       {DEF,E}                                                                 {DRIVERDEF,$}
+<driverModule> 				                           {DRIVERDEF}                                                             {DEF, $ ,DRiverdef}
+<module>                                                                {DEF}                                                               {DEF , $,DRIVERDEF }
+<ret> 							           {RETURNS , E}                                                               { START}
+<input_plist> 						                 {ID}                                                                     {SQBC}
+<input_plist'> 					                     {COMMA , E}                                                                  {SQBC}
+<output_plist> 							        {ID}                                                                     {SQBC}
+<output_plist'> 					             {COMMA ,E}                                                                   {SQBC}	
+<dataType> 		                                      {INTEGER , REAL , BOOLEAN , ARRAY}                                             { COMMA ,SQBC}
+<type> 							     {INTEGER , REAl , BOOLEAN}                                                     {COMMA , SQBC}
+<moduleDef>							     {START}                                                                  {DEF , $, DRIVEREF}
+<statements> 						{E , GET_VALUE,PRINT, ID, SQBO , USE , DECLARE , SWITCH , FOR , WHILE}                   { END , BREAK}
+<statement>                {GET_VALUE, PRINT, ID, SQBO , USE , DECLARE , SWITCH , FOR , WHILE}   {GET_VALUE,PRINT, ID, SQBO , USE , DECLARE , SWITCH , FOR ,WHILE,ASSIGNOP, END , BREAK}
+<ioStmt> 			                                {GET_VALUE , PRINT}  { GET_VALUE,PRINT, ID, SQBO , USE , DECLARE , SWITCH , FOR ,WHILE,ASSIGNOP, END , BREAK}
+<var>  					                          {ID, NUM , RNUM}                                                    { BC , PLUS , MINUS, SEMICOL,MUL,DIV}
+<whichId> 				                             {SQBO , E}                                                                      {BC , PLUS ,MINUS}
+<simpleStmt> 						          {ID , SQBO,USE}                    {GET_VALUE,PRINT, ID, SQBO , USE , DECLARE , SWITCH , FOR ,WHILE,ASSIGNOP, END , BREAK}
+<assignmentStmt> 							{ID}              {GET_VALUE,PRINT, ID, SQBO , USE , DECLARE , SWITCH , FOR ,WHILE,ASSIGNOP, END , BREAK}
+<whichStmt> 						   {ASSIGNOP , SQBO}   {GET_VALUE,PRINT, ID, SQBO , USE , DECLARE , SWITCH , FOR ,WHILE,ASSIGNOP, END , BREAK}
+<lvalueIDStmt> 						              {ASSIGNOP}                 {GET_VALUE,PRINT, ID, SQBO , USE , DECLARE , SWITCH , FOR ,WHILE,ASSIGNOP, END , BREAK}
+<lvalueARRStmt>   				                       {SQBO}                     {GET_VALUE,PRINT, ID, SQBO , USE , DECLARE , SWITCH , FOR ,WHILE,ASSIGNOP, END , BREAK}
+<index> 							    {NUM , ID}                                                                     {SQBC}
+<moduleReuseStmt>		                                     {USE , SQBO}                   {GET_VALUE,PRINT, ID, SQBO , USE , DECLARE , SWITCH , FOR ,WHILE,ASSIGNOP, END , BREAK}
+<optional> 						             {SQBO}                                                                        {USE}
+<idList>							     {ID}                                                                    {SQBC, COLON, SEMICOL}
+<expression> 						    {PLUS , MINUS , BO , TRUE ,FALSE  }                                                     {SEMICOL}
+<U>								{MINUS,PLUS}                                                                        {SEMICOL}
+<U1>								{BO,ID, NUM ,RNUM}                                                                      {SEMICOL}
+<arithmeticExpr> 						{BO,ID,NUM,RNUM}                                                                        {SEMICOL,BC}
+<A1> 								{PLUS,MINUS,E}                                                                          {SEMICOL,BC}
+<term> 								{BO,ID,NUM,RNUM}                                                                {PLUS,MINUS,SEMICOL,BC}
+<A2> 						                 {MUL,DIV,E}                                                                     {PLUS,MINUS,SEMICOL,BC}
+<factor> 							{BO,NUM,ID,RNUM}                                                                 {BO,ID,NUM,RNUM}
+<booleanExpr>                                           {TRUE,FALSE,BO,ID,NUM,RNUM}                                                             {BC,SEMICOL,AND,OR}
+<booleanExpr'> 						            {AND,OR,E}                                                                      {BC,SEMICOL,AND,OR}
+<logicalOp> 							  {AND,OR}                                                          {TRUE,FALSE,BO,ID,NUM,RNUM}
+<relationalOp> 						     {LT,LE,GE,GT,EQ,NE}                                                                 {BO,ID,NUM,RNUM}
+<declareStmt> 					                    {DECLARE}                      {GET_VALUE,PRINT, ID, SQBO , USE , DECLARE , SWITCH , FOR ,WHILE,ASSIGNOP, END , BREAK}
+<condionalStmt> 				                   {SWITCH}                        {GET_VALUE,PRINT, ID, SQBO , USE , DECLARE , SWITCH , FOR ,WHILE,ASSIGNOP, END , BREAK}
+<caseStmt>      	                                            {CASE}                                                                          {DEFAULT,END}
+<casestmt'> 	                                               {CASE,E}                                                                                {DEFAULT,END}
+<value> 							{NUM,TRUE,FALSE}                                                                            {COLON}
+<default>                                                   {DEFAULT,E}                                                                             {END}
+<iterativeStmt>                                             {FOR,WHILE}                             {GET_VALUE,PRINT, ID, SQBO , USE , DECLARE , SWITCH , FOR ,WHILE,ASSIGNOP, END , BREAK}
+<range> 							{NUM}                                                                                 {BC,SQBC}
+<op1> 								 {PLUS,MINUS}                                                                         {BO,ID,NUM,RNUM}
+<op2> 						                  {MUL,DIV}                                                                            {BO,ID,NUM,RNUM}
+<var1>			                                        {ID,NUM,RNUM,TRUE,FALSE}                                                                      {BC}
