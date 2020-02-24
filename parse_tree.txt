@@ -10,8 +10,8 @@
                        8   epsilon                   ----- otherModules               yes  epsilon                   
                   <<<  8   DRIVERDEF                 ----- driverModule               yes  DRIVERDEF                 
                driver  8   DRIVER                    ----- driverModule               yes  DRIVER                    
-                       8   PROGRAM                   ----- driverModule               yes  PROGRAM                   
-                       8   DRIVERENDDEF              ----- driverModule               yes  DRIVERENDDEF              
+              program  8   PROGRAM                   ----- driverModule               yes  PROGRAM                   
+                  >>>  8   ENDDRIVERDEF              ----- driverModule               yes  ENDDRIVERDEF              
  --------------------  8   driverModule              ----- program                    no   driverModule              
                 start  9   START                     ----- moduleDef                  yes  START                     
  --------------------  10  statement                 ----- statements                 no   statement                 
@@ -27,7 +27,8 @@
  --------------------  10  N3                        ----- N3                         no   N3                        
                        10  epsilon                   ----- N3                         yes  epsilon                   
                     :  10  COLON                     ----- declareStmt                yes  COLON                     
-                       10  dataType                  ----- declareStmt                yes  dataType                  
+ --------------------  10  dataType                  ----- declareStmt                no   dataType                  
+              integer  10  INTEGER                   ----- dataType                   yes  INTEGER                   
  --------------------  10  declareStmt               ----- statement                  no   declareStmt               
                     ;  10  SEMICOLON                 ----- declareStmt                yes  SEMICOLON                 
  --------------------  10  statements                ----- moduleDef                  no   statements                
@@ -90,11 +91,17 @@
  --------------------  14  optional                  ----- moduleReuseStmt            no   optional                  
                    :=  14  ASSIGNOP                  ----- optional                   yes  ASSIGNOP                  
                   use  14  USE                       ----- moduleReuseStmt            yes  USE                       
-                       14  MODULE                    ----- moduleReuseStmt            yes  MODULE                    
-                       14  ID                        ----- moduleReuseStmt            yes  ID                        
-                       14  WITH                      ----- moduleReuseStmt            yes  WITH                      
-                       14  PARAMETERS                ----- moduleReuseStmt            yes  PARAMETERS                
-                       14  idList                    ----- moduleReuseStmt            yes  idList                    
+               module  14  MODULE                    ----- moduleReuseStmt            yes  MODULE                    
+                 mod1  14  ID                        ----- moduleReuseStmt            yes  ID                        
+                 with  14  WITH                      ----- moduleReuseStmt            yes  WITH                      
+           parameters  14  PARAMETERS                ----- moduleReuseStmt            yes  PARAMETERS                
+                    v  14  ID                        ----- idList                     yes  ID                        
+ --------------------  14  idList                    ----- moduleReuseStmt            no   idList                    
+                    ,  14  COMMA                     ----- N3                         yes  COMMA                     
+                    w  14  ID                        ----- N3                         yes  ID                        
+ --------------------  14  N3                        ----- idList                     no   N3                        
+ --------------------  14  N3                        ----- N3                         no   N3                        
+                       14  epsilon                   ----- N3                         yes  epsilon                   
  --------------------  14  moduleReuseStmt           ----- simpleStmt                 no   moduleReuseStmt           
                     ;  14  SEMICOLON                 ----- moduleReuseStmt            yes  SEMICOLON                 
  --------------------  14  statements                ----- statements                 no   statements                
@@ -136,12 +143,14 @@
                     [  19  SQBO                      ----- module                     yes  SQBO                      
                     a  19  ID                        ----- input_plist                yes  ID                        
                     :  19  COLON                     ----- input_plist                yes  COLON                     
-                       19  dataType                  ----- input_plist                yes  dataType                  
+ --------------------  19  dataType                  ----- input_plist                no   dataType                  
+              integer  19  INTEGER                   ----- dataType                   yes  INTEGER                   
  --------------------  19  input_plist               ----- module                     no   input_plist               
                     ,  19  COMMA                     ----- input_plist'               yes  COMMA                     
                     b  19  ID                        ----- input_plist'               yes  ID                        
                     :  19  COLON                     ----- input_plist'               yes  COLON                     
-                       19  dataType                  ----- input_plist'               yes  dataType                  
+ --------------------  19  dataType                  ----- input_plist'               no   dataType                  
+              integer  19  INTEGER                   ----- dataType                   yes  INTEGER                   
  --------------------  19  input_plist'              ----- input_plist                no   input_plist'              
  --------------------  19  input_plist'              ----- input_plist'               no   input_plist'              
                        19  epsilon                   ----- input_plist'               yes  epsilon                   
@@ -151,7 +160,8 @@
                     [  20  SQBO                      ----- ret                        yes  SQBO                      
                     x  20  ID                        ----- output_plist               yes  ID                        
                     :  20  COLON                     ----- output_plist               yes  COLON                     
-                       20  type                      ----- output_plist               yes  type                      
+ --------------------  20  type                      ----- output_plist               no   type                      
+              integer  20  INTEGER                   ----- type                       yes  INTEGER                   
  --------------------  20  output_plist              ----- ret                        no   output_plist              
                     ,  20  COMMA                     ----- output_plist'              yes  COMMA                     
                   abc  20  ID                        ----- output_plist'              yes  ID                        
