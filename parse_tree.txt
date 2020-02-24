@@ -1,0 +1,303 @@
+              declare  1   DECLARE                   ----- moduleDeclaration          yes  DECLARE                   
+               module  1   MODULE                    ----- moduleDeclaration          yes  MODULE                    
+                 mod1  1   ID                        ----- moduleDeclaration          yes  ID                        
+ --------------------  1   moduleDeclaration         ----- moduleDeclarations         no   moduleDeclaration         
+                    ;  1   SEMICOLON                 ----- moduleDeclaration          yes  SEMICOLON                 
+ --------------------  1   moduleDeclarations        ----- program                    no   moduleDeclarations        
+ --------------------  8   moduleDeclarations        ----- moduleDeclarations         no   moduleDeclarations        
+                       8   epsilon                   ----- moduleDeclarations         yes  epsilon                   
+ --------------------  8   otherModules              ----- program                    no   otherModules              
+                       8   epsilon                   ----- otherModules               yes  epsilon                   
+                  <<<  8   DRIVERDEF                 ----- driverModule               yes  DRIVERDEF                 
+               driver  8   DRIVER                    ----- driverModule               yes  DRIVER                    
+                       8   PROGRAM                   ----- driverModule               yes  PROGRAM                   
+                       8   DRIVERENDDEF              ----- driverModule               yes  DRIVERENDDEF              
+ --------------------  8   driverModule              ----- program                    no   driverModule              
+                start  9   START                     ----- moduleDef                  yes  START                     
+ --------------------  10  statement                 ----- statements                 no   statement                 
+              declare  10  DECLARE                   ----- declareStmt                yes  DECLARE                   
+                    v  10  ID                        ----- idList                     yes  ID                        
+ --------------------  10  idList                    ----- declareStmt                no   idList                    
+                    ,  10  COMMA                     ----- N3                         yes  COMMA                     
+                    w  10  ID                        ----- N3                         yes  ID                        
+ --------------------  10  N3                        ----- idList                     no   N3                        
+                    ,  10  COMMA                     ----- N3                         yes  COMMA                     
+                    r  10  ID                        ----- N3                         yes  ID                        
+ --------------------  10  N3                        ----- N3                         no   N3                        
+ --------------------  10  N3                        ----- N3                         no   N3                        
+                       10  epsilon                   ----- N3                         yes  epsilon                   
+                    :  10  COLON                     ----- declareStmt                yes  COLON                     
+                       10  dataType                  ----- declareStmt                yes  dataType                  
+ --------------------  10  declareStmt               ----- statement                  no   declareStmt               
+                    ;  10  SEMICOLON                 ----- declareStmt                yes  SEMICOLON                 
+ --------------------  10  statements                ----- moduleDef                  no   statements                
+ --------------------  11  statement                 ----- statements                 no   statement                 
+            get_value  11  GET_VALUE                 ----- ioStmt                     yes  GET_VALUE                 
+                    (  11  BO                        ----- ioStmt                     yes  BO                        
+                    v  11  ID                        ----- ioStmt                     yes  ID                        
+                    )  11  BC                        ----- ioStmt                     yes  BC                        
+ --------------------  11  ioStmt                    ----- statement                  no   ioStmt                    
+                    ;  11  SEMICOLON                 ----- ioStmt                     yes  SEMICOLON                 
+ --------------------  11  statements                ----- statements                 no   statements                
+ --------------------  12  statement                 ----- statements                 no   statement                 
+ --------------------  12  simpleStmt                ----- statement                  no   simpleStmt                
+                    w  12  ID                        ----- assignmentStmt             yes  ID                        
+ --------------------  12  assignmentStmt            ----- simpleStmt                 no   assignmentStmt            
+ --------------------  12  whichStmt                 ----- assignmentStmt             no   whichStmt                 
+                   :=  12  ASSIGNOP                  ----- lvalueIDStmt               yes  ASSIGNOP                  
+ --------------------  12  expression                ----- lvalueIDStmt               no   expression                
+ --------------------  12  factor                    ----- term                       no   factor                    
+ --------------------  12  var_id_num                ----- factor                     no   var_id_num                
+                    5  12  NUM                           5  var_id_num                 yes  NUM                       
+ --------------------  12  term                      ----- arithmeticExpr             no   term                      
+ --------------------  12  A2                        ----- term                       no   A2                        
+                       12  epsilon                   ----- A2                         yes  epsilon                   
+ --------------------  12  arithmeticExpr            ----- AnyTerm                    no   arithmeticExpr            
+ --------------------  12  A1                        ----- arithmeticExpr             no   A1                        
+                       12  epsilon                   ----- A1                         yes  epsilon                   
+ --------------------  12  AnyTerm                   ----- arithmeticOrBooleanExpr    no   AnyTerm                   
+ --------------------  12  N8                        ----- AnyTerm                    no   N8                        
+                       12  epsilon                   ----- N8                         yes  epsilon                   
+ --------------------  12  arithmeticOrBooleanExpr   ----- expression                 no   arithmeticOrBooleanExpr   
+ --------------------  12  N7                        ----- arithmeticOrBooleanExpr    no   N7                        
+                       12  epsilon                   ----- N7                         yes  epsilon                   
+ --------------------  12  lvalueIDStmt              ----- whichStmt                  no   lvalueIDStmt              
+                    ;  12  SEMICOLON                 ----- lvalueIDStmt               yes  SEMICOLON                 
+ --------------------  12  statements                ----- statements                 no   statements                
+ --------------------  13  statement                 ----- statements                 no   statement                 
+              declare  13  DECLARE                   ----- declareStmt                yes  DECLARE                   
+                    m  13  ID                        ----- idList                     yes  ID                        
+ --------------------  13  idList                    ----- declareStmt                no   idList                    
+ --------------------  13  N3                        ----- idList                     no   N3                        
+                       13  epsilon                   ----- N3                         yes  epsilon                   
+                    :  13  COLON                     ----- declareStmt                yes  COLON                     
+ --------------------  13  dataType                  ----- declareStmt                no   dataType                  
+                 real  13  REAL                      ----- dataType                   yes  REAL                      
+ --------------------  13  declareStmt               ----- statement                  no   declareStmt               
+                    ;  13  SEMICOLON                 ----- declareStmt                yes  SEMICOLON                 
+ --------------------  13  statements                ----- statements                 no   statements                
+ --------------------  14  statement                 ----- statements                 no   statement                 
+ --------------------  14  simpleStmt                ----- statement                  no   simpleStmt                
+                    [  14  SQBO                      ----- optional                   yes  SQBO                      
+                    r  14  ID                        ----- idList                     yes  ID                        
+ --------------------  14  idList                    ----- optional                   no   idList                    
+                    ,  14  COMMA                     ----- N3                         yes  COMMA                     
+                    m  14  ID                        ----- N3                         yes  ID                        
+ --------------------  14  N3                        ----- idList                     no   N3                        
+ --------------------  14  N3                        ----- N3                         no   N3                        
+                       14  epsilon                   ----- N3                         yes  epsilon                   
+                    ]  14  SQBC                      ----- optional                   yes  SQBC                      
+ --------------------  14  optional                  ----- moduleReuseStmt            no   optional                  
+                   :=  14  ASSIGNOP                  ----- optional                   yes  ASSIGNOP                  
+                  use  14  USE                       ----- moduleReuseStmt            yes  USE                       
+                       14  MODULE                    ----- moduleReuseStmt            yes  MODULE                    
+                       14  ID                        ----- moduleReuseStmt            yes  ID                        
+                       14  WITH                      ----- moduleReuseStmt            yes  WITH                      
+                       14  PARAMETERS                ----- moduleReuseStmt            yes  PARAMETERS                
+                       14  idList                    ----- moduleReuseStmt            yes  idList                    
+ --------------------  14  moduleReuseStmt           ----- simpleStmt                 no   moduleReuseStmt           
+                    ;  14  SEMICOLON                 ----- moduleReuseStmt            yes  SEMICOLON                 
+ --------------------  14  statements                ----- statements                 no   statements                
+ --------------------  15  statement                 ----- statements                 no   statement                 
+                print  15  PRINT                     ----- ioStmt                     yes  PRINT                     
+                    (  15  BO                        ----- ioStmt                     yes  BO                        
+ --------------------  15  var                       ----- ioStmt                     no   var                       
+                    r  15  ID                        ----- var_id_num                 yes  ID                        
+ --------------------  15  var_id_num                ----- var                        no   var_id_num                
+ --------------------  15  whichId                   ----- var_id_num                 no   whichId                   
+                       15  epsilon                   ----- whichId                    yes  epsilon                   
+                    )  15  BC                        ----- ioStmt                     yes  BC                        
+ --------------------  15  ioStmt                    ----- statement                  no   ioStmt                    
+                    ;  15  SEMICOLON                 ----- ioStmt                     yes  SEMICOLON                 
+ --------------------  15  statements                ----- statements                 no   statements                
+ --------------------  16  statement                 ----- statements                 no   statement                 
+                print  16  PRINT                     ----- ioStmt                     yes  PRINT                     
+                    (  16  BO                        ----- ioStmt                     yes  BO                        
+ --------------------  16  var                       ----- ioStmt                     no   var                       
+                    m  16  ID                        ----- var_id_num                 yes  ID                        
+ --------------------  16  var_id_num                ----- var                        no   var_id_num                
+ --------------------  16  whichId                   ----- var_id_num                 no   whichId                   
+                       16  epsilon                   ----- whichId                    yes  epsilon                   
+                    )  16  BC                        ----- ioStmt                     yes  BC                        
+ --------------------  16  ioStmt                    ----- statement                  no   ioStmt                    
+                    ;  16  SEMICOLON                 ----- ioStmt                     yes  SEMICOLON                 
+ --------------------  16  statements                ----- statements                 no   statements                
+ --------------------  17  statements                ----- statements                 no   statements                
+                       17  epsilon                   ----- statements                 yes  epsilon                   
+ --------------------  9   moduleDef                 ----- driverModule               no   moduleDef                 
+                  end  17  END                       ----- moduleDef                  yes  END                       
+ --------------------  1   program                   ----- ROOT                       no   program                   
+                   <<  18  DEF                       ----- module                     yes  DEF                       
+               module  18  MODULE                    ----- module                     yes  MODULE                    
+                 mod1  18  ID                        ----- module                     yes  ID                        
+                   >>  18  ENDDEF                    ----- module                     yes  ENDDEF                    
+                takes  19  TAKES                     ----- module                     yes  TAKES                     
+                input  19  INPUT                     ----- module                     yes  INPUT                     
+                    [  19  SQBO                      ----- module                     yes  SQBO                      
+                    a  19  ID                        ----- input_plist                yes  ID                        
+                    :  19  COLON                     ----- input_plist                yes  COLON                     
+                       19  dataType                  ----- input_plist                yes  dataType                  
+ --------------------  19  input_plist               ----- module                     no   input_plist               
+                    ,  19  COMMA                     ----- input_plist'               yes  COMMA                     
+                    b  19  ID                        ----- input_plist'               yes  ID                        
+                    :  19  COLON                     ----- input_plist'               yes  COLON                     
+                       19  dataType                  ----- input_plist'               yes  dataType                  
+ --------------------  19  input_plist'              ----- input_plist                no   input_plist'              
+ --------------------  19  input_plist'              ----- input_plist'               no   input_plist'              
+                       19  epsilon                   ----- input_plist'               yes  epsilon                   
+                    ]  19  SQBC                      ----- module                     yes  SQBC                      
+                    ;  19  SEMICOLON                 ----- module                     yes  SEMICOLON                 
+              returns  20  RETURNS                   ----- ret                        yes  RETURNS                   
+                    [  20  SQBO                      ----- ret                        yes  SQBO                      
+                    x  20  ID                        ----- output_plist               yes  ID                        
+                    :  20  COLON                     ----- output_plist               yes  COLON                     
+                       20  type                      ----- output_plist               yes  type                      
+ --------------------  20  output_plist              ----- ret                        no   output_plist              
+                    ,  20  COMMA                     ----- output_plist'              yes  COMMA                     
+                  abc  20  ID                        ----- output_plist'              yes  ID                        
+                    :  20  COLON                     ----- output_plist'              yes  COLON                     
+ --------------------  20  type                      ----- output_plist'              no   type                      
+                 real  20  REAL                      ----- type                       yes  REAL                      
+ --------------------  20  output_plist'             ----- output_plist               no   output_plist'             
+ --------------------  20  output_plist'             ----- output_plist'              no   output_plist'             
+                       20  epsilon                   ----- output_plist'              yes  epsilon                   
+                    ]  20  SQBC                      ----- ret                        yes  SQBC                      
+ --------------------  20  ret                       ----- module                     no   ret                       
+                    ;  20  SEMICOLON                 ----- ret                        yes  SEMICOLON                 
+ --------------------  18  module                    ----- otherModules               no   module                    
+                start  21  START                     ----- moduleDef                  yes  START                     
+ --------------------  22  statement                 ----- statements                 no   statement                 
+              declare  22  DECLARE                   ----- declareStmt                yes  DECLARE                   
+                    c  22  ID                        ----- idList                     yes  ID                        
+ --------------------  22  idList                    ----- declareStmt                no   idList                    
+ --------------------  22  N3                        ----- idList                     no   N3                        
+                       22  epsilon                   ----- N3                         yes  epsilon                   
+                    :  22  COLON                     ----- declareStmt                yes  COLON                     
+ --------------------  22  dataType                  ----- declareStmt                no   dataType                  
+                 real  22  REAL                      ----- dataType                   yes  REAL                      
+ --------------------  22  declareStmt               ----- statement                  no   declareStmt               
+                    ;  22  SEMICOLON                 ----- declareStmt                yes  SEMICOLON                 
+ --------------------  22  statements                ----- moduleDef                  no   statements                
+ --------------------  23  statement                 ----- statements                 no   statement                 
+ --------------------  23  simpleStmt                ----- statement                  no   simpleStmt                
+                    c  23  ID                        ----- assignmentStmt             yes  ID                        
+ --------------------  23  assignmentStmt            ----- simpleStmt                 no   assignmentStmt            
+ --------------------  23  whichStmt                 ----- assignmentStmt             no   whichStmt                 
+                   :=  23  ASSIGNOP                  ----- lvalueIDStmt               yes  ASSIGNOP                  
+ --------------------  23  expression                ----- lvalueIDStmt               no   expression                
+ --------------------  23  factor                    ----- term                       no   factor                    
+ --------------------  23  var_id_num                ----- factor                     no   var_id_num                
+                 10.4  23  RNUM                       10.4  var_id_num                 yes  RNUM                      
+ --------------------  23  term                      ----- arithmeticExpr             no   term                      
+ --------------------  23  A2                        ----- term                       no   A2                        
+                       23  epsilon                   ----- A2                         yes  epsilon                   
+ --------------------  23  arithmeticExpr            ----- AnyTerm                    no   arithmeticExpr            
+ --------------------  23  A1                        ----- arithmeticExpr             no   A1                        
+                       23  epsilon                   ----- A1                         yes  epsilon                   
+ --------------------  23  AnyTerm                   ----- arithmeticOrBooleanExpr    no   AnyTerm                   
+ --------------------  23  N8                        ----- AnyTerm                    no   N8                        
+                       23  epsilon                   ----- N8                         yes  epsilon                   
+ --------------------  23  arithmeticOrBooleanExpr   ----- expression                 no   arithmeticOrBooleanExpr   
+ --------------------  23  N7                        ----- arithmeticOrBooleanExpr    no   N7                        
+                       23  epsilon                   ----- N7                         yes  epsilon                   
+ --------------------  23  lvalueIDStmt              ----- whichStmt                  no   lvalueIDStmt              
+                    ;  23  SEMICOLON                 ----- lvalueIDStmt               yes  SEMICOLON                 
+ --------------------  23  statements                ----- statements                 no   statements                
+ --------------------  24  statement                 ----- statements                 no   statement                 
+ --------------------  24  simpleStmt                ----- statement                  no   simpleStmt                
+                    x  24  ID                        ----- assignmentStmt             yes  ID                        
+ --------------------  24  assignmentStmt            ----- simpleStmt                 no   assignmentStmt            
+ --------------------  24  whichStmt                 ----- assignmentStmt             no   whichStmt                 
+                   :=  24  ASSIGNOP                  ----- lvalueIDStmt               yes  ASSIGNOP                  
+ --------------------  24  expression                ----- lvalueIDStmt               no   expression                
+ --------------------  24  factor                    ----- term                       no   factor                    
+                    a  24  ID                        ----- var_id_num                 yes  ID                        
+ --------------------  24  var_id_num                ----- factor                     no   var_id_num                
+ --------------------  24  whichId                   ----- var_id_num                 no   whichId                   
+                       24  epsilon                   ----- whichId                    yes  epsilon                   
+ --------------------  24  term                      ----- arithmeticExpr             no   term                      
+ --------------------  24  A2                        ----- term                       no   A2                        
+                       24  epsilon                   ----- A2                         yes  epsilon                   
+ --------------------  24  arithmeticExpr            ----- AnyTerm                    no   arithmeticExpr            
+ --------------------  24  op1                       ----- A1                         no   op1                       
+                    +  24  PLUS                      ----- op1                        yes  PLUS                      
+ --------------------  24  factor                    ----- term                       no   factor                    
+                    b  24  ID                        ----- var_id_num                 yes  ID                        
+ --------------------  24  var_id_num                ----- factor                     no   var_id_num                
+ --------------------  24  whichId                   ----- var_id_num                 no   whichId                   
+                       24  epsilon                   ----- whichId                    yes  epsilon                   
+ --------------------  24  term                      ----- A1                         no   term                      
+ --------------------  24  A2                        ----- term                       no   A2                        
+                       24  epsilon                   ----- A2                         yes  epsilon                   
+ --------------------  24  A1                        ----- arithmeticExpr             no   A1                        
+ --------------------  24  op1                       ----- A1                         no   op1                       
+                    -  24  MINUS                     ----- op1                        yes  MINUS                     
+ --------------------  24  factor                    ----- term                       no   factor                    
+ --------------------  24  var_id_num                ----- factor                     no   var_id_num                
+                   10  24  NUM                          10  var_id_num                 yes  NUM                       
+ --------------------  24  term                      ----- A1                         no   term                      
+ --------------------  24  A2                        ----- term                       no   A2                        
+                       24  epsilon                   ----- A2                         yes  epsilon                   
+ --------------------  24  A1                        ----- A1                         no   A1                        
+ --------------------  24  A1                        ----- A1                         no   A1                        
+                       24  epsilon                   ----- A1                         yes  epsilon                   
+ --------------------  24  AnyTerm                   ----- arithmeticOrBooleanExpr    no   AnyTerm                   
+ --------------------  24  N8                        ----- AnyTerm                    no   N8                        
+                       24  epsilon                   ----- N8                         yes  epsilon                   
+ --------------------  24  arithmeticOrBooleanExpr   ----- expression                 no   arithmeticOrBooleanExpr   
+ --------------------  24  N7                        ----- arithmeticOrBooleanExpr    no   N7                        
+                       24  epsilon                   ----- N7                         yes  epsilon                   
+ --------------------  24  lvalueIDStmt              ----- whichStmt                  no   lvalueIDStmt              
+                    ;  24  SEMICOLON                 ----- lvalueIDStmt               yes  SEMICOLON                 
+ --------------------  24  statements                ----- statements                 no   statements                
+ --------------------  25  statement                 ----- statements                 no   statement                 
+ --------------------  25  simpleStmt                ----- statement                  no   simpleStmt                
+                  abc  25  ID                        ----- assignmentStmt             yes  ID                        
+ --------------------  25  assignmentStmt            ----- simpleStmt                 no   assignmentStmt            
+ --------------------  25  whichStmt                 ----- assignmentStmt             no   whichStmt                 
+                   :=  25  ASSIGNOP                  ----- lvalueIDStmt               yes  ASSIGNOP                  
+ --------------------  25  expression                ----- lvalueIDStmt               no   expression                
+ --------------------  25  factor                    ----- term                       no   factor                    
+                    b  25  ID                        ----- var_id_num                 yes  ID                        
+ --------------------  25  var_id_num                ----- factor                     no   var_id_num                
+ --------------------  25  whichId                   ----- var_id_num                 no   whichId                   
+                       25  epsilon                   ----- whichId                    yes  epsilon                   
+ --------------------  25  term                      ----- arithmeticExpr             no   term                      
+ --------------------  25  op2                       ----- A2                         no   op2                       
+                    /  25  DIV                       ----- op2                        yes  DIV                       
+ --------------------  25  factor                    ----- A2                         no   factor                    
+ --------------------  25  var_id_num                ----- factor                     no   var_id_num                
+                    5  25  NUM                           5  var_id_num                 yes  NUM                       
+ --------------------  25  A2                        ----- term                       no   A2                        
+ --------------------  25  A2                        ----- A2                         no   A2                        
+                       25  epsilon                   ----- A2                         yes  epsilon                   
+ --------------------  25  arithmeticExpr            ----- AnyTerm                    no   arithmeticExpr            
+ --------------------  25  op1                       ----- A1                         no   op1                       
+                    +  25  PLUS                      ----- op1                        yes  PLUS                      
+ --------------------  25  factor                    ----- term                       no   factor                    
+                    c  25  ID                        ----- var_id_num                 yes  ID                        
+ --------------------  25  var_id_num                ----- factor                     no   var_id_num                
+ --------------------  25  whichId                   ----- var_id_num                 no   whichId                   
+                       25  epsilon                   ----- whichId                    yes  epsilon                   
+ --------------------  25  term                      ----- A1                         no   term                      
+ --------------------  25  A2                        ----- term                       no   A2                        
+                       25  epsilon                   ----- A2                         yes  epsilon                   
+ --------------------  25  A1                        ----- arithmeticExpr             no   A1                        
+ --------------------  25  A1                        ----- A1                         no   A1                        
+                       25  epsilon                   ----- A1                         yes  epsilon                   
+ --------------------  25  AnyTerm                   ----- arithmeticOrBooleanExpr    no   AnyTerm                   
+ --------------------  25  N8                        ----- AnyTerm                    no   N8                        
+                       25  epsilon                   ----- N8                         yes  epsilon                   
+ --------------------  25  arithmeticOrBooleanExpr   ----- expression                 no   arithmeticOrBooleanExpr   
+ --------------------  25  N7                        ----- arithmeticOrBooleanExpr    no   N7                        
+                       25  epsilon                   ----- N7                         yes  epsilon                   
+ --------------------  25  lvalueIDStmt              ----- whichStmt                  no   lvalueIDStmt              
+                    ;  25  SEMICOLON                 ----- lvalueIDStmt               yes  SEMICOLON                 
+ --------------------  25  statements                ----- statements                 no   statements                
+ --------------------  26  statements                ----- statements                 no   statements                
+                       26  epsilon                   ----- statements                 yes  epsilon                   
+ --------------------  21  moduleDef                 ----- module                     no   moduleDef                 
+                  end  26  END                       ----- moduleDef                  yes  END                       
+ --------------------  18  otherModules              ----- program                    no   otherModules              
+ --------------------  26  otherModules              ----- otherModules               no   otherModules              
+                       26  epsilon                   ----- otherModules               yes  epsilon                   
