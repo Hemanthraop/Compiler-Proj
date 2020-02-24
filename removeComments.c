@@ -1,3 +1,14 @@
+/* 			GROUP NO : 18
+	NIKHIL DEVABHAKTUNI    	2017A7PS0032P
+	YAGANTI SHIVA KRISHNA  	2017A7PS0045P
+	SANKEERTH NALAM	       	2017A7PS0070P
+	PAIDIPALLY HEMANTH RAO 	2017A7PS0159P 
+						*/
+
+
+
+
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
