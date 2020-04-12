@@ -178,4 +178,87 @@ void reduce_factor(struct node* root,struct astnode* ast){
 	}
 }
 
-void reduce_
+void reduce_var_id_num(struct node* root,struct astnode* ast){
+	if(root->no_of_children==1){
+		strcpy(ast->lex,(root->Children[0])->lex);
+		ast->no=((root->Children[0])->no);
+	}
+	else{
+**********************************************
+	}
+}
+
+void reduce_U(struct node* root,struct astnode* ast){
+	ast->Children[0]=malloc(sizeof(struct astnode));
+	reduce_op1(root->Children[0],ast->Children[0]);
+	ast->Children[1]=malloc(sizeof(struct astnode));
+	reduce_new_NT(root->Children[1],ast->Children[1]);
+}
+
+void reduce_new_NT(struct node* root,struct astnode* ast){
+	if(root->no_of_children==1)
+	reduce_var_id_num(root->Children[0],ast);
+	
+}
+
+void reduce_stmts(struct node* root,struct astnode* ast){
+
+	if(root->no_of_children==1){
+		return;
+	}
+	//if(ast->no_of_children==0){
+	ast->no= 17 ;
+	ast->Children[no_of_children]=malloc(sizeof(struct astnode));
+	ast->no_of_children++;
+	reduce_stmt(root->Children[0],ast->Children[no_of_children-1]);
+	reduce_stmts(root->Children[1],ast);
+	//}
+}
+
+void reduce_stmt(struct node* root,struct astnode* ast){
+	if((root->Children[0])->no==19)
+		reduce_io_stmt(root->Children[0],ast);
+	if((root->Children[0])->no==20)
+		reduce_single_stmt(root->Children[0],ast);
+	if((root->Children[0])->no==46)
+		reduce_declare_stmt(root->Children[0],ast);
+	if((root->Children[0])->no==47)
+		reduce_cond_stmt(root->Children[0],ast);
+	if((root->Children[0])->no==52)
+		reduce_iter_stmt(root->Children[0],ast);
+}
+
+void reduce_io_stmt(struct node* root,struct astnode* ast){
+	if((root->Children[0])->no==68){
+		ast->Children[0]=malloc(sizeof(struct astnode));
+		ast->no_of_children++;
+		(ast->Children[0])->no=68;
+		ast->Children[1]=malloc(sizeof(struct astnode));
+		ast->no_of_children++;
+		strcpy((ast->Children[1])->lex,(root->Children[2])->lex);
+		(ast->Children[1])->no= 111 ;
+	}
+	if((root->Children[0])->no==69){
+		ast->Children[0]=malloc(sizeof(struct astnode));
+		ast->no_of_children++;
+		(ast->Children[0])->no=69;
+		ast->Children[1]=malloc(sizeof(struct astnode));
+		ast->no_of_children++;
+		reduce_var(root->Children[2],ast->Children[1]);
+		//(ast->Children[1])->no=  ;
+	}
+}
+
+void simple_stmt(struct node* root,struct astnode* ast){
+	if((root->Children[0])->no==21)
+		reduce_assign_stmt(root->Children[0],ast);
+	if((root->Children[0])->no==26)
+		reduce_module_reuse_stmt(root->Children[0],ast);
+}
+
+void reduce_assign_stmt(struct node* root,struct astnode* ast){
+	ast->Children[0]=malloc(sizeof(struct astnode));
+	ast->no_of_children++;
+	ast->Children[0]->no=111;
+	strcpy((root->Children[0])->lex,(ast->Children[0])->lex);
+}
