@@ -210,7 +210,7 @@ void reduce_stmts(struct node* root,struct astnode* ast){
 	ast->no= 17 ;
 	ast->Children[no_of_children]=malloc(sizeof(struct astnode));
 	ast->no_of_children++;
-	reduce_stmt(root->Children[0],ast->Children[no_of_children-1]);
+	reduce_stmt(root->Children[0],ast->Children[ast->no_of_children-1]);
 	reduce_stmts(root->Children[1],ast);
 	//}
 }
@@ -257,8 +257,24 @@ void simple_stmt(struct node* root,struct astnode* ast){
 }
 
 void reduce_assign_stmt(struct node* root,struct astnode* ast){
+	ast->no=105;//should we write lexeme??
 	ast->Children[0]=malloc(sizeof(struct astnode));
 	ast->no_of_children++;
 	ast->Children[0]->no=111;
-	strcpy((root->Children[0])->lex,(ast->Children[0])->lex);
+	strcpy((ast->Children[0])->lex,(root->Children[0])->lex);
+	reduce_which_stmt(root->Children[1],ast);
+}
+void reduce_which_stmt(struct node* root,struct astnode* ast){
+	if(root->Children[0]->no==23)
+		reduce_Lvalueid_stmt(root->Children[0],ast);
+	else 
+		reduce_Lvaluearr_stmt(root->Children[0],ast);
+}
+void reduce_Lvalueid_stmt(struct node* root,struct astnode* ast)){
+	ast->no_of_children++;
+	reduce_expr(root->Children[1],ast->Children[1]);
+}
+void reduce_Lvaluearr_stmt(struct node* root,struct astnode* ast)){
+	
+//have a doubt so i didnt implement
 }
