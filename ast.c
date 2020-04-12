@@ -275,6 +275,18 @@ void reduce_Lvalueid_stmt(struct node* root,struct astnode* ast)){
 	reduce_expr(root->Children[1],ast->Children[1]);
 }
 void reduce_Lvaluearr_stmt(struct node* root,struct astnode* ast)){
+	ast->Children[ast->no_of_children++]=malloc(sizeof(struct astnode));
+	ast->Children[ast->no_of_children-1]->no=106;
+
+	ast->Children[ast->no_of_children++]=malloc(sizeof(struct astnode));
+	reduce_index(root->Children[1],ast->Children[ast->no_of_children-1]);
+
+	ast->Children[ast->no_of_children++]=malloc(sizeof(struct astnode));
+	ast->Children[ast->no_of_children-1]->no=107;
 	
-//have a doubt so i didnt implement
+	reduce_expr(root->Children[4],ast->Children[4]);	
+
+}
+void reduce_index(struct node* root,struct node *ast){
+	strcpy(ast->lex,root->Children[0]->lex);
 }
